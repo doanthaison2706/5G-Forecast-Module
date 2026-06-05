@@ -1,108 +1,76 @@
-# PROJECT OVERVIEW
+# Tổng Quan Dự Án
 
-## Tên dự án
+## Tên Dự Án
 
- Benchmark for Predictive RL
+Benchmark Forecast Module cho Predictive RL
 
----
+## Giới Thiệu
 
-# Giới thiệu
+Trong đồ án chính, mục tiêu là xây dựng hệ thống Predictive Energy-aware
+Reinforcement Learning để tối ưu năng lượng cho trạm 5G.
 
-Trong đồ án chính, mục tiêu là xây dựng hệ thống Predictive Energy-aware Reinforcement Learning để tối ưu năng lượng cho trạm 5G.
+Ở phiên bản V0, agent chỉ quan sát trạng thái hiện tại của mạng và đưa ra quyết
+định tương ứng. Tuy nhiên trong thực tế, việc biết trước xu hướng traffic có thể
+giúp agent ra quyết định tốt hơn thay vì chỉ phản ứng sau khi sự kiện đã xảy ra.
 
-Ở phiên bản V0, Agent chỉ quan sát trạng thái hiện tại của mạng và đưa ra quyết định tương ứng.
+Vì vậy, trước khi xây dựng V2 Predictive RL, cần đánh giá khả năng dự báo traffic
+từ dataset được sinh bởi simulator. Dự án này được tạo ra để xây dựng và đánh giá
+Forecast Module trước khi tích hợp vào hệ thống RL.
 
-Tuy nhiên trong thực tế, việc biết trước xu hướng tải mạng có thể giúp Agent đưa ra quyết định tốt hơn thay vì chỉ phản ứng sau khi sự kiện đã xảy ra.
+## Mục Tiêu
 
-Vì vậy, trước khi xây dựng V2 Predictive RL, cần đánh giá khả năng dự báo tải mạng từ dữ liệu được sinh ra bởi simulator.
+- Xây dựng pipeline dự báo traffic ngắn hạn.
+- Đánh giá khả năng dự báo của dataset simulator.
+- So sánh các model dự báo khác nhau.
+- Lựa chọn model phù hợp để tích hợp vào V2 Predictive RL.
 
-Dự án này được tạo ra nhằm xây dựng và đánh giá Forecast Module trước khi tích hợp vào hệ thống RL.
+## Câu Hỏi Nghiên Cứu
 
----
+Dataset traffic được sinh bởi simulator có đủ tín hiệu dự báo để sử dụng trong
+Predictive RL hay không?
 
-# Mục tiêu
+## Phạm Vi Dự Án
 
-- Xây dựng pipeline dự báo tải mạng ngắn hạn.
-- Đánh giá khả năng dự báo của dữ liệu simulator.
-- So sánh các mô hình dự báo khác nhau.
-- Lựa chọn mô hình phù hợp để tích hợp vào V2 Predictive RL.
-
----
-
-# Câu hỏi nghiên cứu
-
-Liệu dữ liệu traffic được sinh bởi simulator có đủ khả năng dự báo để sử dụng trong Predictive RL hay không?
-
----
-
-# Phạm vi dự án
-
-## Bao gồm
+### Bao Gồm
 
 - Dataset sinh từ simulator.
 - Feature Engineering.
 - Forecast Horizon Analysis.
 - Window Size Analysis.
-- So sánh mô hình dự báo.
+- So sánh model dự báo.
 - Đánh giá sai số dự báo.
 
-## Không bao gồm
+### Không Bao Gồm
 
-- Reinforcement Learning.
+- Train Reinforcement Learning.
 - PPO Training.
 - Energy Optimization.
 - Reward Design.
 - Simulator Development.
 
----
-
-# Kết quả mong đợi
+## Kết Quả Mong Đợi
 
 - Dataset phục vụ dự báo traffic.
-- Pipeline huấn luyện mô hình dự báo.
+- Pipeline train model dự báo.
 - Bộ kết quả đánh giá.
-- Mô hình dự báo được chọn để sử dụng trong V2.
+- Model dự báo được chọn để sử dụng trong V2.
 - Báo cáo chi tiết về quá trình xây dựng và đánh giá Forecast Module.
 
-# Cấu trúc dự án
-forecast_module_benchmark/
+## Cấu Trúc Dự Án
 
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   └── 02_model_benchmark.ipynb
-│
-├── src/
-│   ├── data/
-│   │   ├── dataset_loader.py
-│   │   └── feature_engineering.py
-│   │
-│   ├── models/
-│   │   ├── linear_regression.py
-│   │   └── random_forest.py
-│   │
-│   ├── evaluation/
-│   │   ├── metrics.py
-│   │   └── benchmark.py
-│   │
-│   └── utils/
-│
-├── results/
-│   ├── horizon_analysis.csv
-│   ├── feature_analysis.csv
-│   ├── model_comparison.csv
-│   └── figures/
-│
-├── docs/
-│   ├── 00_PROJECT_OVERVIEW.md
-│   ├── 01_PROBLEM_STATEMENT.md
-│   ├── 02_EXPERIMENT_DESIGN.md
-│   └── 03_ROADMAP.md
-│
-├── requirements.txt
-├── train.py
-├── evaluate.py
-└── README.md
+```text
+data/
+  raw/                 # Dataset gốc từ simulator
+  processed/           # Dataset sau xử lý
+docs/                  # Tài liệu định hướng dự án
+results/
+  v0/                  # Artifact V0
+  v1/                  # Artifact V1
+src/
+  data/                # Dataset Loader, Feature Set, Validation
+  models/              # Model baseline và model benchmark
+run_v0.py              # Chạy validation và phân tích V0
+run_v1_m1.py           # Tạo artifact M1 Dataset Loader
+run_v1_m2.py           # Tạo artifact M2 Feature Set Definition
+run_v1_m3.py           # Tạo artifact M3 Linear Regression Baseline
+```

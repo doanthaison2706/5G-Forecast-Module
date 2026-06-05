@@ -1,84 +1,74 @@
-# PROBLEM STATEMENT
+# Problem Statement
 
-## Bối cảnh
+## Bối Cảnh
 
-Trong đồ án chính, hệ thống Reinforcement Learning được sử dụng để điều khiển trạm 5G theo hướng tiết kiệm năng lượng nhưng vẫn đảm bảo QoS.
+Trong đồ án chính, hệ thống Reinforcement Learning được dùng để điều khiển trạm
+5G theo hướng tiết kiệm năng lượng nhưng vẫn đảm bảo QoS.
 
-Ở phiên bản V0, Agent chỉ quan sát trạng thái hiện tại của mạng và đưa ra quyết định dựa trên thông tin đang có.
+Ở phiên bản V0, agent chỉ quan sát trạng thái hiện tại của mạng và đưa ra quyết
+định dựa trên thông tin đang có. Cách này là Reactive Control.
 
-Điều này khiến Agent hoạt động theo cơ chế phản ứng (Reactive Control).
+## Vấn Đề
 
----
+Traffic mạng thay đổi theo thời gian. Một số thời điểm có tải thấp kéo dài,
+trong khi một số thời điểm xuất hiện đợt tăng tải đột ngột.
 
-# Vấn đề
+Nếu agent chỉ nhìn trạng thái hiện tại:
 
-Lưu lượng mạng trong thực tế luôn thay đổi theo thời gian.
-
-Một số thời điểm có tải thấp kéo dài, trong khi một số thời điểm xuất hiện các đợt tăng tải đột ngột.
-
-Nếu Agent chỉ nhìn trạng thái hiện tại:
-
-- Không thể biết tải mạng sắp tăng hay giảm.
+- Không biết traffic sắp tăng hay giảm.
 - Có thể giảm công suất quá sớm.
-- Có thể phản ứng chậm khi tải tăng đột ngột.
+- Có thể phản ứng chậm khi traffic tăng đột ngột.
 - Dễ ảnh hưởng đến QoS.
 
-Vì vậy cần đánh giá khả năng bổ sung thông tin dự báo vào quá trình ra quyết định.
+Vì vậy cần đánh giá khả năng bổ sung forecast traffic vào quá trình ra quyết
+định.
 
----
+## Câu Hỏi Nghiên Cứu
 
-# Câu hỏi nghiên cứu
+Traffic được sinh bởi simulator có đủ tín hiệu để dự báo và dùng làm input cho
+Predictive RL hay không?
 
-Liệu traffic được sinh bởi simulator có đủ khả năng dự báo để sử dụng làm thông tin đầu vào cho Predictive RL hay không?
+## Giả Thuyết
 
----
+Nếu traffic trong simulator có thể được dự báo với sai số chấp nhận được, forecast
+traffic có thể được dùng để xây dựng Forecast State cho V2 Predictive RL.
 
-# Giả thuyết nghiên cứu
+## Mục Tiêu
 
-Nếu traffic trong simulator có thể được dự báo với sai số chấp nhận được, thì thông tin dự báo có thể được sử dụng để xây dựng Forecast State cho V2 Predictive RL.
-
----
-
-# Mục tiêu
-
-Dự án tập trung trả lời các câu hỏi sau:
-
-### 1. Traffic có dự báo được hay không?
+### 1. Traffic Có Dự Báo Được Không?
 
 Đánh giá khả năng dự báo của dữ liệu traffic được sinh từ simulator.
 
-### 2. Dự báo được xa tới đâu?
+### 2. Dự Báo Được Xa Tới Đâu?
 
-So sánh các mốc:
+So sánh các horizon:
 
-- t + 1
-- t + 5
-- t + 10
+- `t+1`
+- `t+5`
+- `t+10`
 
-### 3. Bao nhiêu lịch sử là đủ?
+### 3. Bao Nhiêu Lịch Sử Là Đủ?
 
-So sánh các kích thước cửa sổ dữ liệu khác nhau.
-
-Ví dụ:
+So sánh các window size:
 
 - Window = 5
 - Window = 10
 - Window = 20
 - Window = 30
 
-### 4. Mô hình nào phù hợp nhất?
+### 4. Model Nào Phù Hợp?
 
 So sánh:
 
 - Linear Regression
 - Random Forest
-- Các mô hình mở rộng trong tương lai
+- Các model mở rộng trong tương lai
 
-# Tiêu chí thành công
+## Tiêu Chí Thành Công
 
 Dự án được xem là thành công nếu:
 
 - Traffic của simulator có khả năng dự báo.
-- Mô hình dự báo đạt sai số ổn định.
+- Model dự báo đạt sai số ổn định.
 - Xác định được Forecast Horizon phù hợp.
 - Lựa chọn được một Forecast Pipeline để tích hợp vào V2 Predictive RL.

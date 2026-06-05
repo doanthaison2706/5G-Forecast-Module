@@ -1,16 +1,16 @@
-# EXPERIMENT DESIGN
+# Thiết Kế Thí Nghiệm
 
-## Mục tiêu
+## Mục Tiêu
 
-Mục tiêu của dự án là đánh giá khả năng dự báo traffic được sinh bởi simulator và lựa chọn Forecast Module phù hợp cho V2 Predictive RL.
+Mục tiêu của dự án là đánh giá khả năng dự báo traffic được sinh bởi simulator và
+lựa chọn Forecast Module phù hợp cho V2 Predictive RL.
 
-Dự án không tập trung vào Reinforcement Learning mà chỉ tập trung vào bài toán dự báo.
+Dự án không tập trung vào Reinforcement Learning mà chỉ tập trung vào bài toán
+forecasting.
 
----
+## Dataset
 
-# Dataset
-
-## Nguồn dữ liệu
+### Nguồn Dữ Liệu
 
 Dữ liệu được sinh trực tiếp từ simulator của đồ án chính.
 
@@ -18,136 +18,96 @@ Scenario hiện tại:
 
 - Indoor Hotspot
 
-Dataset được tạo bằng cách chạy nhiều Episode và ghi lại trạng thái traffic theo thời gian.
+Dataset được tạo bằng cách chạy nhiều episode và ghi lại trạng thái traffic theo
+thời gian.
 
----
+### Feature
 
-## Features
-
-Các đặc trưng đầu vào:
+Các feature đầu vào:
 
 | Feature | Mô tả |
-|----------|----------|
-| traffic_load | Tải mạng hiện tại |
-| ue_count | Số lượng người dùng |
-| traffic_demand_bps | Nhu cầu lưu lượng |
-| mobility_event | Sự kiện di chuyển |
-| time_ratio | Vị trí tương đối trong Episode |
+|---|---|
+| `traffic_load` | Tải mạng hiện tại |
+| `ue_count` | Số lượng người dùng |
+| `traffic_demand_bps` | Nhu cầu traffic |
+| `mobility_event` | Sự kiện di chuyển |
+| `time_ratio` | Vị trí tương đối trong episode |
 
----
+### Target
 
-## Target
-
-Các mục tiêu dự báo:
+Các target dự báo:
 
 | Target | Ý nghĩa |
-|----------|----------|
-| traffic_load_t_plus_1 | Dự báo bước tiếp theo |
-| traffic_load_t_plus_5 | Dự báo sau 5 bước |
-| traffic_load_t_plus_10 | Dự báo sau 10 bước |
+|---|---|
+| `traffic_load_t_plus_1` | Dự báo bước tiếp theo |
+| `traffic_load_t_plus_5` | Dự báo sau 5 bước |
+| `traffic_load_t_plus_10` | Dự báo sau 10 bước |
 
----
-
-# Data Split
+## Data Split
 
 Dataset được chia:
 
-- 80% Training
-- 20% Testing
+- 80% train
+- 20% test
 
-Random State cố định để đảm bảo khả năng tái lập.
+Split mặc định theo `episode_id` để test set không trùng episode với train set.
 
----
+## Evaluation Metric
 
-# Evaluation Metrics
+Các model được đánh giá bằng:
 
-Các mô hình được đánh giá bằng:
+### MAE
 
-## MAE
+Mean Absolute Error, dùng để đo sai số tuyệt đối trung bình.
 
-Mean Absolute Error
+### RMSE
 
-Đánh giá sai số tuyệt đối trung bình.
+Root Mean Squared Error, dùng để đo mức sai lệch lớn.
 
----
+### R²
 
-## RMSE
+R² score, dùng để đo mức độ model giải thích biến động của dữ liệu.
 
-Root Mean Squared Error
+## Thí Nghiệm 1
 
-Đánh giá mức độ sai lệch lớn.
+### Forecast Horizon Analysis
 
----
-
-## R² Score
-
-Đánh giá mức độ giải thích biến động của dữ liệu.
-
----
-
-# Experiment 1
-
-## Forecast Horizon Analysis
-
-Mục tiêu:
-
-Đánh giá khả năng dự báo ở các khoảng thời gian khác nhau.
+Mục tiêu là đánh giá khả năng dự báo ở các horizon khác nhau.
 
 Các mốc:
 
-- t + 1
-- t + 5
-- t + 10
+- `t+1`
+- `t+5`
+- `t+10`
 
-Câu hỏi:
+Câu hỏi: sai số có tăng nhanh khi horizon dài hơn hay không?
 
-Liệu sai số có tăng nhanh khi khoảng dự báo dài hơn hay không?
+## Thí Nghiệm 2
 
----
+### Feature Contribution Analysis
 
-# Experiment 2
-
-## Feature Contribution Analysis
-
-Mục tiêu:
-
-Đánh giá ảnh hưởng của từng nhóm đặc trưng.
+Mục tiêu là đánh giá ảnh hưởng của từng nhóm feature.
 
 ### Feature Set A
 
-traffic_load
+`traffic_load`
 
 ### Feature Set B
 
-traffic_load
-
-ue_count
+`traffic_load`, `ue_count`
 
 ### Feature Set C
 
-traffic_load
+`traffic_load`, `ue_count`, `traffic_demand_bps`, `mobility_event`, `time_ratio`
 
-ue_count
+Câu hỏi: thông tin ngoài traffic hiện tại có giúp cải thiện khả năng dự báo hay
+không?
 
-traffic_demand_bps
+## Thí Nghiệm 3
 
-mobility_event
+### History Window Analysis
 
-time_ratio
-
-Câu hỏi:
-
-Thông tin ngoài traffic hiện tại có giúp cải thiện khả năng dự báo hay không?
-
----
-
-# Experiment 3
-
-## History Window Analysis
-
-Mục tiêu:
-
-Đánh giá lượng lịch sử cần thiết cho dự báo.
+Mục tiêu là đánh giá lượng lịch sử cần thiết cho dự báo.
 
 Các cấu hình:
 
@@ -156,44 +116,26 @@ Các cấu hình:
 - Window = 20
 - Window = 30
 
-Câu hỏi:
+Câu hỏi: bao nhiêu bước lịch sử là đủ để dự báo traffic?
 
-Bao nhiêu bước lịch sử là đủ để dự báo traffic?
+## Thí Nghiệm 4
 
----
+### Model Benchmark
 
-# Experiment 4
+Mục tiêu là so sánh hiệu năng giữa các model.
 
-## Model Benchmark
+Các model:
 
-Mục tiêu:
+- Linear Regression: baseline đơn giản.
+- Random Forest: model benchmark tiếp theo.
+- Công việc tương lai: XGBoost, GRU, LSTM.
 
-So sánh hiệu năng giữa các mô hình.
-
-Các mô hình:
-
-### Linear Regression
-
-Baseline đơn giản.
-
-### Random Forest
-
-Mô hình chính của phiên bản hiện tại.
-
-### Future Work
-
-- XGBoost
-- GRU
-- LSTM
-
----
-
-# Result Summary
+## Tóm Tắt Kết Quả Cần Có
 
 Kết quả cuối cùng cần trả lời:
 
 - Traffic simulator có khả năng dự báo hay không?
 - Forecast Horizon nào phù hợp nhất?
 - Feature nào quan trọng nhất?
-- Mô hình nào phù hợp nhất?
+- Model nào phù hợp nhất?
 - Pipeline nào sẽ được tích hợp vào V2 Predictive RL?

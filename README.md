@@ -1,33 +1,43 @@
-# Forecast Module Benchmark for Predictive RL
+# Benchmark Forecast Module cho Predictive RL
 
 Dự án này xây dựng và đánh giá Forecast Module cho V2 Predictive RL. Phạm vi
 hiện tại là kiểm tra và benchmark khả năng dự báo traffic từ dataset simulator.
 
-## Current Status
+## Trạng Thái Hiện Tại
 
 V0 - Forecastability Check: **PASS**  
 V1 - Baseline Forecast: **IN PROGRESS**
 
 - Traffic hiện tại có tương quan cao với traffic tương lai: `t+1 = 0.9552`,
   `t+5 = 0.9428`, `t+10 = 0.9052`.
-- Dataset có ba traffic regimes rõ ràng: `normal`, `busy_period`, `crowd_surge`.
-- Validation kỹ thuật pass 13/13 checks, nên dữ liệu đủ tin cậy để modeling.
-- V1 Dataset Loader đã sẵn sàng để tạo train/test split 80/20 cho các horizon
+- Dataset có ba traffic regime rõ ràng: `normal`, `busy_period`, `crowd_surge`.
+- Validation kỹ thuật pass 13/13 check, nên dữ liệu đủ tin cậy để modeling.
+- V1 M1 Dataset Loader đã sẵn sàng để tạo train/test split 80/20 cho các horizon
   `t+1`, `t+5`, `t+10`.
+- V1 M2 Feature Set Definition đã định nghĩa `traffic_only`, `traffic_ue`,
+  và `full_features`.
+- V1 M3 Linear Regression Baseline đã train, predict và đánh giá MAE, RMSE, R².
 
-## Quick Start
+## Chạy Nhanh
 
 ```bash
 python3 run_v0.py
+python3 run_v1_m1.py
+python3 run_v1_m2.py
+python3 run_v1_m3.py
 ```
 
-Output được ghi vào:
+Kết quả được ghi vào:
 
 - `data/processed/traffic_dataset_v0_clean.csv`
 - `results/v0/dataset_summary.csv`
 - `results/v0/validation_report.md`
 - `results/v0/README.md`
 - `results/v0/figures/`
+- `results/v1/dataset_loader_summary.md`
+- `results/v1/feature_set_definition.md`
+- `results/v1/linear_regression_baseline.md`
+- `results/v1/linear_regression_predictions.csv`
 
 Nếu gặp cảnh báo Matplotlib cache trên macOS, chạy:
 
@@ -64,17 +74,27 @@ print(dataset.features_test.shape)
 print(dataset.target_column)
 ```
 
+## V1 Artifact
+
 Tạo artifact chính thức cho milestone M1:
 
 ```bash
 python3 run_v1_m1.py
 ```
 
-Output:
+Tạo artifact chính thức cho milestone M2:
 
-- `results/v1/dataset_loader_summary.md`
+```bash
+python3 run_v1_m2.py
+```
 
-## Project Layout
+Tạo artifact chính thức cho milestone M3:
+
+```bash
+python3 run_v1_m3.py
+```
+
+## Cấu Trúc Dự Án
 
 ```text
 data/
@@ -82,15 +102,15 @@ data/
   processed/           # Dataset sau xử lý
 docs/                  # Problem statement, roadmap, experiment design
 results/
-  v0/                  # Report, analysis, summary và figures của V0
+  v0/                  # Report, analysis, summary và figure của V0
   v1/                  # Artifact và report của V1
-src/                   # Code xử lý data, validation, visualization
+src/                   # Code xử lý data, validation, model
 ```
 
-## Result Location
+## Vị Trí Kết Quả
 
-Kết quả phân tích không đặt trong `docs/` nữa. Các artifact của từng version nằm
-trong `results/<version>/`.
+Kết quả phân tích không đặt trong `docs/`. Artifact của từng version nằm trong
+`results/<version>/`.
 
 V0 result entrypoint:
 
@@ -99,20 +119,23 @@ V0 result entrypoint:
 - `results/v0/dataset_summary.csv`
 - `results/v0/figures/`
 
-V1 M1 result entrypoint:
+V1 result entrypoint:
 
-- `results/v1/dataset_loader_summary.md` - artifact chính thức cho Dataset Loader
+- `results/v1/dataset_loader_summary.md` - artifact chính thức cho M1 Dataset Loader
+- `results/v1/feature_set_definition.md` - artifact chính thức cho M2 Feature Set Definition
+- `results/v1/linear_regression_baseline.md` - artifact chính thức cho M3 Linear Regression Baseline
+- `results/v1/linear_regression_predictions.csv` - output predict của M3
 
-## Project Scope
+## Phạm Vi Dự Án
 
-This repository focuses on traffic forecasting for Predictive RL. Reinforcement
-Learning training, reward design, energy optimization, and simulator development
-are outside this benchmark project.
+Dự án tập trung vào bài toán traffic forecasting cho Predictive RL. Phần train
+Reinforcement Learning, reward design, energy optimization và simulator
+development nằm ngoài phạm vi benchmark này.
 
-## Next Step
+## Bước Tiếp Theo
 
-Hoàn thiện V1 Baseline Forecast:
+Hoàn thiện các phần còn lại của V1 Baseline Forecast:
 
-- Linear Regression training pipeline.
-- MAE, RMSE, R2 cho các horizon `t+1`, `t+5`, `t+10`.
-- Report kết quả vào `results/v1/`.
+- So sánh thêm theo feature set nếu cần.
+- Chuẩn bị report tổng hợp V1.
+- Chuyển sang V2 Forecast Benchmark sau khi baseline ổn định.

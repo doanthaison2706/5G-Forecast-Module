@@ -1,18 +1,18 @@
-# V1 M1 Dataset Loader Summary
+# V1 M1 Tóm Tắt Dataset Loader
 
-This file is the official milestone artifact for V1 M1 Dataset Loader.
+File này là artifact chính thức cho V1 M1 Dataset Loader.
 
-## Dataset Split
+## Chia Dataset
 
-- Total dataset rows: 29,000
-- Train rows: 23,200
-- Test rows: 5,800
-- Train/test ratio: 80.00% / 20.00%
+- Tổng số dòng dataset: 29,000
+- Số dòng train: 23,200
+- Số dòng test: 5,800
+- Tỷ lệ train/test: 80.00% / 20.00%
 
-## Features
+## Feature
 
-- Feature count: 7
-- Feature names:
+- Số lượng feature: 7
+- Tên feature:
   - `traffic_load`
   - `ue_count`
   - `traffic_demand_bps`
@@ -21,14 +21,14 @@ This file is the official milestone artifact for V1 M1 Dataset Loader.
   - `mobility_event_crowd_surge`
   - `mobility_event_normal`
 
-## Forecast Targets
+## Forecast Target
 
-- Available forecast targets:
+- Forecast target khả dụng:
   - `t+1` -> `traffic_load_t_plus_1`
   - `t+5` -> `traffic_load_t_plus_5`
   - `t+10` -> `traffic_load_t_plus_10`
 
 ## Validation
 
-- Validation status: PASS
-- Validation checks passed: 13/13
+- Trạng thái validation: PASS
+- Số check validation đạt: 13/13

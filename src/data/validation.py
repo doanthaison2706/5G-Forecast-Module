@@ -38,9 +38,9 @@ def validate_dataset(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "required_columns",
             not missing_columns,
-            "All required columns are present."
+            "Có đủ các cột bắt buộc."
             if not missing_columns
-            else f"Missing columns: {missing_columns}",
+            else f"Thiếu cột: {missing_columns}",
         )
     )
     if missing_columns:
@@ -51,7 +51,7 @@ def validate_dataset(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "missing_values",
             missing_values == 0,
-            f"Total missing values: {missing_values}",
+            f"Tổng giá trị thiếu: {missing_values}",
         )
     )
 
@@ -60,7 +60,7 @@ def validate_dataset(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "duplicate_rows",
             duplicate_rows == 0,
-            f"Duplicate rows: {duplicate_rows}",
+            f"Số dòng trùng lặp: {duplicate_rows}",
         )
     )
 
@@ -72,7 +72,7 @@ def validate_dataset(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "traffic_range",
             all(count == 0 for count in out_of_range.values()),
-            f"Rows outside [0, 1]: {out_of_range}",
+            f"Số dòng ngoài khoảng [0, 1]: {out_of_range}",
         )
     )
 
@@ -81,7 +81,7 @@ def validate_dataset(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "ue_count_range",
             invalid_ue == 0,
-            f"Rows with negative ue_count: {invalid_ue}",
+            f"Số dòng có ue_count âm: {invalid_ue}",
         )
     )
 
@@ -90,7 +90,7 @@ def validate_dataset(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "traffic_demand_range",
             invalid_demand == 0,
-            f"Rows with negative traffic_demand_bps: {invalid_demand}",
+            f"Số dòng có traffic_demand_bps âm: {invalid_demand}",
         )
     )
 
@@ -99,7 +99,7 @@ def validate_dataset(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "time_ratio_range",
             invalid_time_ratio == 0,
-            f"Rows outside [0, 1]: {invalid_time_ratio}",
+            f"Số dòng ngoài khoảng [0, 1]: {invalid_time_ratio}",
         )
     )
 
@@ -147,20 +147,20 @@ def write_validation_report(
     step_count = df.groupby("episode_id").size()
 
     lines = [
-        "# V0 Dataset Validation Report",
+        "# Báo Cáo Validation Dataset V0",
         "",
-        f"Overall status: **{status}**",
+        f"Trạng thái tổng thể: **{status}**",
         "",
         "## Dataset",
         "",
-        f"- Rows: {row_count}",
-        f"- Columns: {len(df.columns)}",
-        f"- Episodes: {episode_count}",
-        f"- Rows per episode: min={step_count.min()}, max={step_count.max()}, mean={step_count.mean():.2f}",
+        f"- Số dòng: {row_count}",
+        f"- Số cột: {len(df.columns)}",
+        f"- Số episode: {episode_count}",
+        f"- Số dòng mỗi episode: min={step_count.min()}, max={step_count.max()}, mean={step_count.mean():.2f}",
         "",
-        "## Checks",
+        "## Check",
         "",
-        "| Check | Status | Details |",
+        "| Check | Trạng thái | Chi tiết |",
         "|---|---:|---|",
     ]
 
@@ -172,10 +172,10 @@ def write_validation_report(
     lines.extend(
         [
             "",
-            "## V0 Conclusion",
-            "",
-            "The dataset is suitable for V1 baseline forecasting if all checks pass.",
-            "Target alignment is checked where the future step is available within the exported dataset.",
+        "## Kết Luận V0",
+        "",
+        "Dataset phù hợp để chuyển sang V1 baseline forecasting khi tất cả check đều PASS.",
+        "Target alignment được kiểm tra ở các dòng có future step trong dataset đã export.",
         ]
     )
 
@@ -200,17 +200,17 @@ def _validate_episode_steps(df: pd.DataFrame) -> list[ValidationResult]:
         ValidationResult(
             "episode_step_duplicates",
             duplicate_steps == 0,
-            f"Duplicate episode-step pairs: {duplicate_steps}",
+            f"Số cặp episode-step trùng lặp: {duplicate_steps}",
         ),
         ValidationResult(
             "episode_step_order",
             monotonic_failures == 0,
-            f"Episodes not sorted by step: {monotonic_failures}",
+            f"Số episode không được sort theo step: {monotonic_failures}",
         ),
         ValidationResult(
             "episode_step_continuity",
             continuity_failures == 0,
-            f"Episodes with missing steps: {continuity_failures}",
+            f"Số episode bị thiếu step: {continuity_failures}",
         ),
     ]
 
@@ -237,7 +237,7 @@ def _validate_target_alignment(df: pd.DataFrame) -> list[ValidationResult]:
             ValidationResult(
                 f"{target_column}_alignment",
                 mismatches == 0,
-                f"Comparable rows: {comparable}; mismatches: {mismatches}",
+                f"Số dòng so sánh được: {comparable}; số mismatch: {mismatches}",
             )
         )
 

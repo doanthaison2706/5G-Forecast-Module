@@ -30,26 +30,26 @@ def main() -> None:
     validation_status = "PASS" if passed_checks == total_checks else "FAIL"
 
     lines = [
-        "# V1 M1 Dataset Loader Summary",
+        "# V1 M1 Tóm Tắt Dataset Loader",
         "",
-        "This file is the official milestone artifact for V1 M1 Dataset Loader.",
+        "File này là artifact chính thức cho V1 M1 Dataset Loader.",
         "",
-        "## Dataset Split",
+        "## Chia Dataset",
         "",
-        f"- Total dataset rows: {total_rows:,}",
-        f"- Train rows: {train_rows:,}",
-        f"- Test rows: {test_rows:,}",
-        f"- Train/test ratio: {train_ratio:.2%} / {test_ratio:.2%}",
+        f"- Tổng số dòng dataset: {total_rows:,}",
+        f"- Số dòng train: {train_rows:,}",
+        f"- Số dòng test: {test_rows:,}",
+        f"- Tỷ lệ train/test: {train_ratio:.2%} / {test_ratio:.2%}",
         "",
-        "## Features",
+        "## Feature",
         "",
-        f"- Feature count: {len(dataset.feature_columns)}",
-        "- Feature names:",
+        f"- Số lượng feature: {len(dataset.feature_columns)}",
+        "- Tên feature:",
         *[f"  - `{feature}`" for feature in dataset.feature_columns],
         "",
-        "## Forecast Targets",
+        "## Forecast Target",
         "",
-        "- Available forecast targets:",
+        "- Forecast target khả dụng:",
         *[
             f"  - `t+{horizon}` -> `{target_column}`"
             for horizon, target_column in TARGET_COLUMNS.items()
@@ -57,8 +57,8 @@ def main() -> None:
         "",
         "## Validation",
         "",
-        f"- Validation status: {validation_status}",
-        f"- Validation checks passed: {passed_checks}/{total_checks}",
+        f"- Trạng thái validation: {validation_status}",
+        f"- Số check validation đạt: {passed_checks}/{total_checks}",
     ]
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
