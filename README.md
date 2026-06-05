@@ -7,7 +7,7 @@ hiện tại là kiểm tra và benchmark khả năng dự báo traffic từ dat
 
 V0 - Forecastability Check: **PASS**  
 V1 - Baseline Forecast: **PASS**  
-V2 - Forecast Benchmark: **IN PROGRESS**
+V2 - Forecast Benchmark: **PASS**
 
 - Traffic hiện tại có tương quan cao với traffic tương lai: `t+1 = 0.9552`,
   `t+5 = 0.9428`, `t+10 = 0.9052`.
@@ -22,6 +22,12 @@ V2 - Forecast Benchmark: **IN PROGRESS**
 - V1 M5 Results Report đã gom toàn bộ kết quả V1 vào một report.
 - V2 Experiment 1 Forecast Horizon Analysis đã tạo metric, diagnostic, report
   và figure riêng cho `t+1`, `t+5`, `t+10`.
+- V2 Experiment 2 History Window Analysis đã tạo metric, diagnostic, report
+  và figure riêng cho window `5`, `10`, `20`, `30`.
+- V2 Experiment 3 Feature Contribution Analysis đã tạo metric, diagnostic,
+  report và figure riêng cho `traffic_only`, `traffic_ue`, `full_features`.
+- V2 Experiment 4 Model Comparison đã tạo metric, diagnostic, report và figure
+  riêng cho `linear_regression` và `random_forest`.
 
 ## Chạy Nhanh
 
@@ -46,6 +52,18 @@ Kết quả được ghi vào:
 - `results/v2/horizon_analysis/horizon_metrics.csv`
 - `results/v2/horizon_analysis/horizon_predictions.csv`
 - `results/v2/horizon_analysis/figures/`
+- `results/v2/window_analysis/README.md`
+- `results/v2/window_analysis/window_metrics.csv`
+- `results/v2/window_analysis/window_predictions.csv`
+- `results/v2/window_analysis/figures/`
+- `results/v2/feature_analysis/README.md`
+- `results/v2/feature_analysis/feature_metrics.csv`
+- `results/v2/feature_analysis/feature_predictions.csv`
+- `results/v2/feature_analysis/figures/`
+- `results/v2/model_comparison/README.md`
+- `results/v2/model_comparison/model_metrics.csv`
+- `results/v2/model_comparison/model_predictions.csv`
+- `results/v2/model_comparison/figures/`
 
 Nếu gặp cảnh báo Matplotlib cache trên macOS, chạy:
 
@@ -92,7 +110,7 @@ python3 run_v1.py
 
 ## V2 Pipeline
 
-Chạy V2 Experiment 1 - Forecast Horizon Analysis:
+Chạy các experiment V2 Forecast Benchmark hiện có:
 
 ```bash
 python3 run_v2.py
@@ -137,6 +155,18 @@ V2 result entrypoint:
 - `results/v2/horizon_analysis/horizon_metrics.csv` - metric và diagnostic theo horizon
 - `results/v2/horizon_analysis/horizon_predictions.csv` - output predict theo horizon
 - `results/v2/horizon_analysis/figures/` - figure evaluation
+- `results/v2/window_analysis/README.md` - Experiment 2 History Window Analysis
+- `results/v2/window_analysis/window_metrics.csv` - metric và diagnostic theo history window
+- `results/v2/window_analysis/window_predictions.csv` - output predict theo history window
+- `results/v2/window_analysis/figures/` - figure evaluation
+- `results/v2/feature_analysis/README.md` - Experiment 3 Feature Contribution Analysis
+- `results/v2/feature_analysis/feature_metrics.csv` - metric và diagnostic theo feature set
+- `results/v2/feature_analysis/feature_predictions.csv` - output predict theo feature set
+- `results/v2/feature_analysis/figures/` - figure evaluation
+- `results/v2/model_comparison/README.md` - Experiment 4 Model Comparison
+- `results/v2/model_comparison/model_metrics.csv` - metric và diagnostic theo model
+- `results/v2/model_comparison/model_predictions.csv` - output predict theo model
+- `results/v2/model_comparison/figures/` - figure evaluation
 
 ## Phạm Vi Dự Án
 
@@ -146,8 +176,5 @@ development nằm ngoài phạm vi benchmark này.
 
 ## Bước Tiếp Theo
 
-Hoàn thiện các phần còn lại của V2 Forecast Benchmark:
-
-- Feature Contribution Analysis.
-- History Window Analysis.
-- Model Comparison.
+Tổng hợp kết quả V2 Forecast Benchmark thành lựa chọn Forecast Module cuối cùng
+để tích hợp vào V2 Predictive RL.

@@ -40,18 +40,19 @@ def create_v1_evaluation_figures(
     predictions: pd.DataFrame,
     metrics: pd.DataFrame,
     output_dir: str | Path,
+    group_label: str = "horizon",
 ) -> list[Path]:
     figures_dir = Path(output_dir)
     figures_dir.mkdir(parents=True, exist_ok=True)
 
     output_paths = [
-        figures_dir / "linear_regression_metrics_by_horizon.png",
+        figures_dir / f"linear_regression_metrics_by_{group_label}.png",
         figures_dir / "linear_regression_actual_vs_prediction.png",
         figures_dir / "linear_regression_residual_distribution.png",
         figures_dir / "linear_regression_sample_timeseries.png",
     ]
 
-    _plot_metrics_by_horizon(metrics, output_paths[0])
+    _plot_metrics_by_horizon(metrics, output_paths[0], group_label)
     _plot_actual_vs_prediction(predictions, output_paths[1])
     _plot_residual_distribution(predictions, output_paths[2])
     _plot_sample_timeseries(predictions, output_paths[3])
@@ -60,7 +61,11 @@ def create_v1_evaluation_figures(
 
 
 # Plot MAE, RMSE, and R2 by forecast horizon.
-def _plot_metrics_by_horizon(metrics: pd.DataFrame, output_path: Path) -> None:
+def _plot_metrics_by_horizon(
+    metrics: pd.DataFrame,
+    output_path: Path,
+    group_label: str,
+) -> None:
     fig, axes = plt.subplots(1, 3, figsize=(13, 4))
     colors = ["#2f6f6d", "#6f4e7c", "#a95d40"]
     metric_specs = [
@@ -72,12 +77,12 @@ def _plot_metrics_by_horizon(metrics: pd.DataFrame, output_path: Path) -> None:
     for ax, (column, label), color in zip(axes, metric_specs, colors):
         ax.bar(metrics["horizon"], metrics[column], color=color)
         ax.set_title(label)
-        ax.set_xlabel("horizon")
+        ax.set_xlabel(group_label)
         ax.grid(axis="y", alpha=0.25)
         if column == "r2":
             ax.set_ylim(0.0, 1.0)
 
-    fig.suptitle("Metric theo horizon")
+    fig.suptitle(f"Metric theo {group_label}")
     fig.tight_layout()
     fig.savefig(output_path, dpi=160)
     plt.close(fig)

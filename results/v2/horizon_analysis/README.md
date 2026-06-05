@@ -48,4 +48,4 @@ Figure đã tạo:
 ## Kết Luận
 
 - Forecast Horizon được đề xuất cho V2 hiện tại: `t+1`.
-- Có thể chuyển sang V2 Experiment 2 - Feature Contribution Analysis.
+- Có thể chuyển sang V2 Experiment 2 - History Window Analysis.
