@@ -1,0 +1,1 @@
+"""Forecast module benchmark package."""
