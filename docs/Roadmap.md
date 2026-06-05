@@ -42,6 +42,8 @@ Xây dựng model dự báo cơ bản.
 - M1 Dataset Loader.
 - M2 Feature Set Definition.
 - M3 Linear Regression Baseline.
+- M4 Evaluation/Visualization.
+- M5 Results Report.
 - Train/Test Pipeline.
 - MAE, RMSE, R².
 
@@ -49,7 +51,7 @@ Xây dựng model dự báo cơ bản.
 
 - Pipeline train hoàn chỉnh.
 - Có baseline để so sánh.
-- Có artifact cho từng milestone.
+- Có report tổng hợp V1 tại `results/v1/README.md`.
 
 ## V2 - Forecast Benchmark
 

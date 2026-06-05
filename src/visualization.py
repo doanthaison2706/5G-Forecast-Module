@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
+# Create all V0 exploratory figures.
 def create_v0_figures(df: pd.DataFrame, output_dir: str | Path) -> None:
     figures_dir = Path(output_dir)
     figures_dir.mkdir(parents=True, exist_ok=True)
@@ -17,6 +18,7 @@ def create_v0_figures(df: pd.DataFrame, output_dir: str | Path) -> None:
     _plot_traffic_by_event(df, figures_dir / "traffic_load_by_mobility_event.png")
 
 
+# Plot the distribution of current traffic load.
 def _plot_traffic_distribution(df: pd.DataFrame, output_path: Path) -> None:
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.hist(df["traffic_load"], bins=40, color="#2f6f6d", edgecolor="white")
@@ -29,6 +31,7 @@ def _plot_traffic_distribution(df: pd.DataFrame, output_path: Path) -> None:
     plt.close(fig)
 
 
+# Plot one sample episode as a traffic time series.
 def _plot_sample_episode(df: pd.DataFrame, output_path: Path) -> None:
     first_episode = df["episode_id"].min()
     sample = df[df["episode_id"] == first_episode]
@@ -45,6 +48,7 @@ def _plot_sample_episode(df: pd.DataFrame, output_path: Path) -> None:
     plt.close(fig)
 
 
+# Plot traffic load grouped by mobility event.
 def _plot_traffic_by_event(df: pd.DataFrame, output_path: Path) -> None:
     grouped = [
         group["traffic_load"].to_numpy()

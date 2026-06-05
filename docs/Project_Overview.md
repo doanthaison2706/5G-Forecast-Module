@@ -69,8 +69,8 @@ results/
 src/
   data/                # Dataset Loader, Feature Set, Validation
   models/              # Model baseline và model benchmark
+  evaluation/          # Evaluation và visualization
+  v1_pipeline.py       # Pipeline tổng hợp V1
 run_v0.py              # Chạy validation và phân tích V0
-run_v1_m1.py           # Tạo artifact M1 Dataset Loader
-run_v1_m2.py           # Tạo artifact M2 Feature Set Definition
-run_v1_m3.py           # Tạo artifact M3 Linear Regression Baseline
+run_v1.py              # Chạy toàn bộ V1 và tạo M5 Results Report
 ```

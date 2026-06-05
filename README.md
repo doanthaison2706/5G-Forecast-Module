@@ -6,7 +6,7 @@ hiện tại là kiểm tra và benchmark khả năng dự báo traffic từ dat
 ## Trạng Thái Hiện Tại
 
 V0 - Forecastability Check: **PASS**  
-V1 - Baseline Forecast: **IN PROGRESS**
+V1 - Baseline Forecast: **PASS**
 
 - Traffic hiện tại có tương quan cao với traffic tương lai: `t+1 = 0.9552`,
   `t+5 = 0.9428`, `t+10 = 0.9052`.
@@ -17,14 +17,14 @@ V1 - Baseline Forecast: **IN PROGRESS**
 - V1 M2 Feature Set Definition đã định nghĩa `traffic_only`, `traffic_ue`,
   và `full_features`.
 - V1 M3 Linear Regression Baseline đã train, predict và đánh giá MAE, RMSE, R².
+- V1 M4 Evaluation/Visualization đã tạo metric summary và figure đánh giá.
+- V1 M5 Results Report đã gom toàn bộ kết quả V1 vào một report.
 
 ## Chạy Nhanh
 
 ```bash
 python3 run_v0.py
-python3 run_v1_m1.py
-python3 run_v1_m2.py
-python3 run_v1_m3.py
+python3 run_v1.py
 ```
 
 Kết quả được ghi vào:
@@ -34,10 +34,10 @@ Kết quả được ghi vào:
 - `results/v0/validation_report.md`
 - `results/v0/README.md`
 - `results/v0/figures/`
-- `results/v1/dataset_loader_summary.md`
-- `results/v1/feature_set_definition.md`
-- `results/v1/linear_regression_baseline.md`
+- `results/v1/README.md`
 - `results/v1/linear_regression_predictions.csv`
+- `results/v1/linear_regression_metrics.csv`
+- `results/v1/figures/`
 
 Nếu gặp cảnh báo Matplotlib cache trên macOS, chạy:
 
@@ -74,24 +74,12 @@ print(dataset.features_test.shape)
 print(dataset.target_column)
 ```
 
-## V1 Artifact
+## V1 Pipeline
 
-Tạo artifact chính thức cho milestone M1:
-
-```bash
-python3 run_v1_m1.py
-```
-
-Tạo artifact chính thức cho milestone M2:
+Chạy toàn bộ V1 từ M1 đến M5:
 
 ```bash
-python3 run_v1_m2.py
-```
-
-Tạo artifact chính thức cho milestone M3:
-
-```bash
-python3 run_v1_m3.py
+python3 run_v1.py
 ```
 
 ## Cấu Trúc Dự Án
@@ -104,7 +92,7 @@ docs/                  # Problem statement, roadmap, experiment design
 results/
   v0/                  # Report, analysis, summary và figure của V0
   v1/                  # Artifact và report của V1
-src/                   # Code xử lý data, validation, model
+src/                   # Code xử lý data, validation, model, pipeline
 ```
 
 ## Vị Trí Kết Quả
@@ -121,10 +109,10 @@ V0 result entrypoint:
 
 V1 result entrypoint:
 
-- `results/v1/dataset_loader_summary.md` - artifact chính thức cho M1 Dataset Loader
-- `results/v1/feature_set_definition.md` - artifact chính thức cho M2 Feature Set Definition
-- `results/v1/linear_regression_baseline.md` - artifact chính thức cho M3 Linear Regression Baseline
-- `results/v1/linear_regression_predictions.csv` - output predict của M3
+- `results/v1/README.md` - M5 Results Report, gom M1-M4 và kết luận V1
+- `results/v1/linear_regression_metrics.csv` - output metric
+- `results/v1/linear_regression_predictions.csv` - output predict
+- `results/v1/figures/` - figure evaluation
 
 ## Phạm Vi Dự Án
 
