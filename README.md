@@ -6,7 +6,8 @@ hiện tại là kiểm tra và benchmark khả năng dự báo traffic từ dat
 ## Trạng Thái Hiện Tại
 
 V0 - Forecastability Check: **PASS**  
-V1 - Baseline Forecast: **PASS**
+V1 - Baseline Forecast: **PASS**  
+V2 - Forecast Benchmark: **IN PROGRESS**
 
 - Traffic hiện tại có tương quan cao với traffic tương lai: `t+1 = 0.9552`,
   `t+5 = 0.9428`, `t+10 = 0.9052`.
@@ -19,12 +20,15 @@ V1 - Baseline Forecast: **PASS**
 - V1 M3 Linear Regression Baseline đã train, predict và đánh giá MAE, RMSE, R².
 - V1 M4 Evaluation/Visualization đã tạo metric summary và figure đánh giá.
 - V1 M5 Results Report đã gom toàn bộ kết quả V1 vào một report.
+- V2 Experiment 1 Forecast Horizon Analysis đã tạo metric, diagnostic, report
+  và figure riêng cho `t+1`, `t+5`, `t+10`.
 
 ## Chạy Nhanh
 
 ```bash
 python3 run_v0.py
 python3 run_v1.py
+python3 run_v2.py
 ```
 
 Kết quả được ghi vào:
@@ -38,6 +42,10 @@ Kết quả được ghi vào:
 - `results/v1/linear_regression_predictions.csv`
 - `results/v1/linear_regression_metrics.csv`
 - `results/v1/figures/`
+- `results/v2/horizon_analysis/README.md`
+- `results/v2/horizon_analysis/horizon_metrics.csv`
+- `results/v2/horizon_analysis/horizon_predictions.csv`
+- `results/v2/horizon_analysis/figures/`
 
 Nếu gặp cảnh báo Matplotlib cache trên macOS, chạy:
 
@@ -82,6 +90,14 @@ Chạy toàn bộ V1 từ M1 đến M5:
 python3 run_v1.py
 ```
 
+## V2 Pipeline
+
+Chạy V2 Experiment 1 - Forecast Horizon Analysis:
+
+```bash
+python3 run_v2.py
+```
+
 ## Cấu Trúc Dự Án
 
 ```text
@@ -92,6 +108,7 @@ docs/                  # Problem statement, roadmap, experiment design
 results/
   v0/                  # Report, analysis, summary và figure của V0
   v1/                  # Artifact và report của V1
+  v2/                  # Artifact và report của V2 Forecast Benchmark
 src/                   # Code xử lý data, validation, model, pipeline
 ```
 
@@ -114,6 +131,13 @@ V1 result entrypoint:
 - `results/v1/linear_regression_predictions.csv` - output predict
 - `results/v1/figures/` - figure evaluation
 
+V2 result entrypoint:
+
+- `results/v2/horizon_analysis/README.md` - Experiment 1 Forecast Horizon Analysis
+- `results/v2/horizon_analysis/horizon_metrics.csv` - metric và diagnostic theo horizon
+- `results/v2/horizon_analysis/horizon_predictions.csv` - output predict theo horizon
+- `results/v2/horizon_analysis/figures/` - figure evaluation
+
 ## Phạm Vi Dự Án
 
 Dự án tập trung vào bài toán traffic forecasting cho Predictive RL. Phần train
@@ -122,8 +146,8 @@ development nằm ngoài phạm vi benchmark này.
 
 ## Bước Tiếp Theo
 
-Hoàn thiện các phần còn lại của V1 Baseline Forecast:
+Hoàn thiện các phần còn lại của V2 Forecast Benchmark:
 
-- So sánh thêm theo feature set nếu cần.
-- Chuẩn bị report tổng hợp V1.
-- Chuyển sang V2 Forecast Benchmark sau khi baseline ổn định.
+- Feature Contribution Analysis.
+- History Window Analysis.
+- Model Comparison.

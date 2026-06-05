@@ -1,4 +1,7 @@
+import os
 from pathlib import Path
+
+os.environ.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib")
 
 import matplotlib
 
